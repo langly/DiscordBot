@@ -1,12 +1,13 @@
         
 import discord
+import settings
 from lametric import * 
 
-## Your discord bot token goes here
-TOKEN='' 
+
+settings.init("bot.conf")
 
 ## Your LaMetric IP and token goes here
-l = LaMetric("IP", "Token")
+l = LaMetric(settings.get('lametric_ip'), settings.get('lametric_key'))
 l.notify(2867, "paa")
 
 client = discord.Client()
@@ -36,4 +37,4 @@ async def on_ready():
     print(client.user.id)
     print("---------")
 
-client.run(TOKEN)
+client.run(settings.get('discord_key'))
