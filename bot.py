@@ -10,15 +10,20 @@ settings.init("bot.conf")
 l = LaMetric(settings.get('lametric_ip'), settings.get('lametric_key'))
 l.notify(2867, "paa")
 
-client = discord.Client()
+intents = discord.Intents.default()
+intents.messages = True
+client = discord.Client(intents=intents)
 
 @client.event
 async def on_message(message):
     if message.author == client.user:
         return 
 
-    print(message.content)
-    l.notify(2867, message.content)
+    channel = message.channel.name
+    frm = message.author.name
+
+    msg = f"#{channel}: {frm}: {message.content}"
+    l.notify(2867, msg)
 
 @client.event
 async def on_member_update(old, new):
